@@ -18,20 +18,23 @@ var chalk = require("chalk");
 
 
 var command = process.argv[2];
-switch (command) {
-    case "movie-this":
-        getMovie();
-        break;
-    case "concert-this":
-        concertThis();
-        break;
-    case "spotify-this-song":
-        getSong();
-        break;
-    case "do-what-it-says":
-        doWhatItSays();
-        break;
+function switchStatement(){
+    switch (command) {
+        case "movie-this":
+            getMovie();
+            break;
+        case "concert-this":
+            concertThis();
+            break;
+        case "spotify-this-song":
+            getSong();
+            break;
+        case "do-what-it-says":
+            doWhatItSays();
+            break;
+    }
 }
+
 
 
 //OMDB ====================================================
@@ -40,10 +43,9 @@ var movie;
 function getMovie() {
 
     //Grab user input
-    movie = process.argv[3];
-    for (var i = 4; i < process.argv.length; i++) {
-        movie += (" " + process.argv[i]);
-    }
+    // var show = process.argv.slice(2).join(" ");
+    movie = process.argv.slice(3).join(" ");
+
     
     //If user doesn't enter movie, return error
     if (!movie){
@@ -78,10 +80,7 @@ var artist;
 function concertThis() {
 
     //Grab user input
-    artist = process.argv[3];
-    for (var i = 4; i < process.argv.length; i++) {
-        artist += (" " + process.argv[i]);
-    }
+    artist = process.argv.slice(3).join(" ");
 
     //If user doesn't enter artist, return error
     if (!artist){
@@ -121,10 +120,10 @@ function getSong() {
     });
 
     //Grab user input
-    song = process.argv[3];
-    for (var i = 4; i < process.argv.length; i++) {
-        song += (" " + process.argv[i]);
+    if(!song){
+        song = process.argv.slice(3).join(" ");
     }
+    
     
     //If user doesnt enter song, return error
     if(!song){
@@ -160,32 +159,19 @@ function doWhatItSays() {
 
     fs.readFile("random.txt", "utf8", function (error, data) {
         if (error) {
-            return console.log(error);
+            return console.log(chalk.red("ERROR: " + error));
         }
         else {
             var array = data.split(',');
             console.log(array);
             console.log(array[1]);
-            switch(array[0]){
-                case "movie-this":
-                    movie = array[1].trim();
-                    getMovie();
-                    break;
-                case "concert-this":
-                    artist = array[1].trim();
-                    concertThis();
-                    break;
-                case "spotify-this-song":
-                    song = array[1].trim();     //not actually entering something in argv[3] so just returning error?
-                    console.log(song);
-                    getSong();
-                    break;
-                
-            }
+            command = array[0];
+            song = array[1];
+            switchStatement();
         
         }
     });
 
 }
 
-doWhatItSays();
+switchStatement();
