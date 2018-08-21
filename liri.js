@@ -1,8 +1,6 @@
 //TO DO
 
-//convert event date in getArtist
-//dowhatitsays -- fix bug
-
+//error handling
 //log.txt
 //readme
 //add to portfolio
@@ -95,22 +93,20 @@ function concertThis() {
         "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=" + keys.bandsintown;
     request(queryUrl, function (error, response, body) {
         if (!error && response.statusCode === 200) {
-            var body = JSON.parse(body);
+            var data = JSON.parse(body);
+            var formatTime = moment(data[0].datetime.slice(0,10),"YYYY-MM-DD").format("dddd MMMM Do, YYYY");
             
             console.log("---------------------------------------" +
-                        chalk.bold.blue("\nNEXT SHOW FOR " + artist.toUpperCase()) +
-                        chalk.bold("\n\nVenue Name: ") + body[0].venue.name + 
-                        chalk.bold("\nVenue Location: ") + body[0].venue.city + ", " + body[0].venue.country +
-                        chalk.bold("\nDate: ") +
+                        chalk.bold.blue("\nNEXT SHOW FOR: " + artist.toUpperCase()) +
+                        chalk.bold("\n\nVenue Name: ") + data[0].venue.name + 
+                        chalk.bold("\nVenue Location: ") + data[0].venue.city + ", " + data[0].venue.country +
+                        chalk.bold("\nDate: ") + formatTime +
                         "\n---------------------------------------");
-
-            //fix date format
-            // console.log("Date: " + moment(JSON.parse(body)[0].datetime, ).format());
         }
     });
 }
 
-// //Spotify This Song ========================================
+//Spotify This Song ========================================
 
 var song;
 function getSong() {
@@ -164,7 +160,6 @@ function doWhatItSays() {
         else {
             var array = data.split(',');
             console.log(array);
-            console.log(array[1]);
             command = array[0];
             song = array[1];
             switchStatement();
