@@ -1,9 +1,3 @@
-//TO DO
-
-//error handling
-//log.txt
-//readme
-//add to portfolio
 
 require("dotenv").config();
 
@@ -33,16 +27,14 @@ function switchStatement(){
     }
 }
 
-
+var input = process.argv.slice(3).join(" ");
 
 //OMDB ====================================================
 
-var movie;
 function getMovie() {
 
     //Grab user input
-    // var show = process.argv.slice(2).join(" ");
-    movie = process.argv.slice(3).join(" ");
+    var movie = input;
 
     
     //If user doesn't enter movie, return error
@@ -58,27 +50,34 @@ function getMovie() {
     request(queryUrl, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             var data = JSON.parse(body);
-            console.log("------------------------------------");
-            console.log(chalk.bold("Movie title: ")              + data.Title +
-                        chalk.bold("\nReleased: " )              + data.Year +
-                        chalk.bold("\nIMDB Rating: ")            + data.Ratings[0].Value +
-                        chalk.bold("\nRotten Tomatoes Rating: ") + data.Ratings[1].Value +
-                        chalk.bold("\nProduced in: ")            + data.Country +
-                        chalk.bold("\nLanguage(s): ")            + data.Language +
-                        chalk.bold("\nPlot: ")                   + data.Plot +
-                        chalk.bold("\nActors: ")                 + data.Actors);
-            console.log("------------------------------------");
+            var movieData = [
+                        "Movie title: "            + data.Title,
+                        "Released: "               + data.Year,
+                        "IMDB Rating: "            + data.Ratings[0].Value,
+                        "Rotten Tomatoes Rating: " + data.Ratings[1].Value,
+                        "Produced in: "            + data.Country,
+                        "Language(s): "            + data.Language,
+                        "Plot: "                   + data.Plot,
+                        "Actors: "                 + data.Actors
+                        ].join("\n\n");
+
+            fs.appendFile("log.txt", movieData + "\n---------------------------\n", function(err){
+                if (err) throw err;
+                console.log("---------------------------\n" +
+                            movieData +
+                            "\n---------------------------");
+            });
         }
     })
 }
 
 
 //BandsInTown =============================================
-var artist;
+// var artist;
 function concertThis() {
 
     //Grab user input
-    artist = process.argv.slice(3).join(" ");
+    var artist = input;
 
     //If user doesn't enter artist, return error
     if (!artist){
@@ -95,20 +94,25 @@ function concertThis() {
         if (!error && response.statusCode === 200) {
             var data = JSON.parse(body);
             var formatTime = moment(data[0].datetime.slice(0,10),"YYYY-MM-DD").format("dddd MMMM Do, YYYY");
-            
-            console.log("---------------------------------------" +
-                        chalk.bold.blue("\nNEXT SHOW FOR: " + artist.toUpperCase()) +
-                        chalk.bold("\n\nVenue Name: ") + data[0].venue.name + 
-                        chalk.bold("\nVenue Location: ") + data[0].venue.city + ", " + data[0].venue.country +
-                        chalk.bold("\nDate: ") + formatTime +
-                        "\n---------------------------------------");
+            var artistData = [
+                            "Venue Name: " + data[0].venue.name,
+                            "Venue Location: " + data[0].venue.city + ", " + data[0].venue.country,
+                            "Date: " + formatTime
+                            ].join("\n\n");
+
+            fs.appendFile("log.txt", artistData + "\n---------------------------\n", function(err){
+                if (err) throw err;
+                console.log(chalk.bold.blue("NEXT SHOW FOR: " + artist.toUpperCase()) + 
+                                            "\n\n" + artistData + 
+                                            "\n---------------------------");
+            });            
         }
     });
 }
 
 //Spotify This Song ========================================
 
-var song;
+// var song;
 function getSong() {
     var spotify = new Spotify({
         id:keys.spotify.id,
@@ -116,9 +120,7 @@ function getSong() {
     });
 
     //Grab user input
-    if(!song){
-        song = process.argv.slice(3).join(" ");
-    }
+    var song = input;
     
     
     //If user doesnt enter song, return error
@@ -138,15 +140,20 @@ function getSong() {
         var artist = data.tracks.items[0].artists[0].name;
         var album = data.tracks.items[0].album.name;
         var preview = data.tracks.items[0].preview_url;
-        console.log("--------------------------------------" +
-                    chalk.bold("\nArtist: ") + artist +           
-                    chalk.bold("\nName: ") + name +
-                    chalk.bold("\nAlbum: ") + album +
-                    chalk.bold("\nPreview link: ") + preview +
-                    "\n--------------------------------------");
+        var songData = [
+                        "Artist: " + artist,
+                        "Name: " + name,
+                        "Album: " + album,
+                        "Preview link: " + preview
+                        ].join("\n\n");
 
+        fs.appendFile("log.txt", songData + "\n---------------------------\n", function(err){
+            if (err) throw err;
+            console.log("---------------------------\n" +
+                        songData +
+                        "\n---------------------------");
+        });
     });
-
 }
 
 // //Do What It Says ===========================================
@@ -161,7 +168,7 @@ function doWhatItSays() {
             var array = data.split(',');
             console.log(array);
             command = array[0];
-            song = array[1];
+            input = array[1];
             switchStatement();
         
         }
