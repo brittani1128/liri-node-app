@@ -10,14 +10,8 @@ Begin by cloning the repo in your terminal and cd into the liri-node-app
 ```
 git clone https://github.com/brittani1128/liri-node-app.git
 cd liri-node-app
-```# Bands In Town API key
-
-BANDS_IN_TOWN_KEY=codingbootcamp
-
-# OMDB API key
-
-OMDB_KEY=trilogy
 ```
+
 Install necessary packages
 
 ```
