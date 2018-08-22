@@ -10,7 +10,7 @@ var chalk = require("chalk");
 
 
 var command = process.argv[2];
-function switchStatement(){
+function switchStatement() {
     switch (command) {
         case "movie-this":
             getMovie();
@@ -36,9 +36,9 @@ function getMovie() {
     //Grab user input
     var movie = input;
 
-    
+
     //If user doesn't enter movie, return error
-    if (!movie){
+    if (!movie) {
         console.log(chalk.red("ERROR: You did not provide a movie. How about: Mr. Nobody"));
         movie = "mr+nobody"
     } else {
@@ -51,21 +51,21 @@ function getMovie() {
         if (!error && response.statusCode === 200) {
             var data = JSON.parse(body);
             var movieData = [
-                        "Movie title: "            + data.Title,
-                        "Released: "               + data.Year,
-                        "IMDB Rating: "            + data.Ratings[0].Value,
-                        "Rotten Tomatoes Rating: " + data.Ratings[1].Value,
-                        "Produced in: "            + data.Country,
-                        "Language(s): "            + data.Language,
-                        "Plot: "                   + data.Plot,
-                        "Actors: "                 + data.Actors
-                        ].join("\n\n");
+                "Movie title: " + data.Title,
+                "Released: " + data.Year,
+                "IMDB Rating: " + data.Ratings[0].Value,
+                "Rotten Tomatoes Rating: " + data.Ratings[1].Value,
+                "Produced in: " + data.Country,
+                "Language(s): " + data.Language,
+                "Plot: " + data.Plot,
+                "Actors: " + data.Actors
+            ].join("\n\n");
 
-            fs.appendFile("log.txt", movieData + "\n---------------------------\n", function(err){
+            fs.appendFile("log.txt", movieData + "\n---------------------------\n", function (err) {
                 if (err) throw err;
                 console.log("---------------------------\n" +
-                            movieData +
-                            "\n---------------------------");
+                    movieData +
+                    "\n---------------------------");
             });
         }
     })
@@ -80,7 +80,7 @@ function concertThis() {
     var artist = input;
 
     //If user doesn't enter artist, return error
-    if (!artist){
+    if (!artist) {
         console.log(chalk.red("ERROR: You did not provide an artist!"));
         return;
     } else {
@@ -93,19 +93,19 @@ function concertThis() {
     request(queryUrl, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             var data = JSON.parse(body);
-            var formatTime = moment(data[0].datetime.slice(0,10),"YYYY-MM-DD").format("dddd MMMM Do, YYYY");
+            var formatTime = moment(data[0].datetime.slice(0, 10), "YYYY-MM-DD").format("dddd MMMM Do, YYYY");
             var artistData = [
-                            "Venue Name: " + data[0].venue.name,
-                            "Venue Location: " + data[0].venue.city + ", " + data[0].venue.country,
-                            "Date: " + formatTime
-                            ].join("\n\n");
+                "Venue Name: " + data[0].venue.name,
+                "Venue Location: " + data[0].venue.city + ", " + data[0].venue.country,
+                "Date: " + formatTime
+            ].join("\n\n");
 
-            fs.appendFile("log.txt", artistData + "\n---------------------------\n", function(err){
+            fs.appendFile("log.txt", artistData + "\n---------------------------\n", function (err) {
                 if (err) throw err;
-                console.log(chalk.bold.blue("NEXT SHOW FOR: " + artist.toUpperCase()) + 
-                                            "\n\n" + artistData + 
-                                            "\n---------------------------");
-            });            
+                console.log(chalk.bold.blue("NEXT SHOW FOR: " + artist.toUpperCase()) +
+                    "\n\n" + artistData +
+                    "\n---------------------------");
+            });
         }
     });
 }
@@ -115,16 +115,16 @@ function concertThis() {
 // var song;
 function getSong() {
     var spotify = new Spotify({
-        id:keys.spotify.id,
-        secret:keys.spotify.secret
+        id: keys.spotify.id,
+        secret: keys.spotify.secret
     });
 
     //Grab user input
     var song = input;
-    
-    
+
+
     //If user doesnt enter song, return error
-    if(!song){
+    if (!song) {
         console.log(chalk.red("ERROR: You did not provide a song. How about: The Sign by Ace of Base"));
         song = "the sign ace of base"
     } else {
@@ -141,17 +141,17 @@ function getSong() {
         var album = data.tracks.items[0].album.name;
         var preview = data.tracks.items[0].preview_url;
         var songData = [
-                        "Artist: " + artist,
-                        "Name: " + name,
-                        "Album: " + album,
-                        "Preview link: " + preview
-                        ].join("\n\n");
+            "Artist: " + artist,
+            "Name: " + name,
+            "Album: " + album,
+            "Preview link: " + preview
+        ].join("\n\n");
 
-        fs.appendFile("log.txt", songData + "\n---------------------------\n", function(err){
+        fs.appendFile("log.txt", songData + "\n---------------------------\n", function (err) {
             if (err) throw err;
             console.log("---------------------------\n" +
-                        songData +
-                        "\n---------------------------");
+                songData +
+                "\n---------------------------");
         });
     });
 }
@@ -170,7 +170,7 @@ function doWhatItSays() {
             command = array[0];
             input = array[1];
             switchStatement();
-        
+
         }
     });
 
