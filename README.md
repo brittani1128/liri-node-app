@@ -50,5 +50,5 @@ Begin each query with ```node liri.js``` followed by one of the available subcom
 
 
 <p align="center">
-    <img src="images/liri.jpg" width="600">
+    <img src="images/liri.jpg" width="800px">
 </p>
