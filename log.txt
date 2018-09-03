@@ -36,3 +36,33 @@ Album: The Hits--Chapter One
 
 Preview link: https://p.scdn.co/mp3-preview/e72a05dc3f69c891e3390c3ceaa77fad02f6b5f6?cid=218b67d7552f4489bddb7b7d54a7e034
 ---------------------------
+Venue Name: Electric Picnic
+
+Venue Location: Portland, United States
+
+Date: Monday September 3rd, 2018
+---------------------------
+Artist: MGMT
+
+Name: Electric Feel
+
+Album: Oracular Spectacular
+
+Preview link: https://p.scdn.co/mp3-preview/dba49cb2290710a45cba747b0a6cf3f9c869ecfe?cid=218b67d7552f4489bddb7b7d54a7e034
+---------------------------
+Movie title: Remember the Titans
+
+Released: 2000
+
+IMDB Rating: 7.8/10
+
+Rotten Tomatoes Rating: 73%
+
+Produced in: USA
+
+Language(s): English
+
+Plot: The true story of a newly appointed African-American coach and his high school team on their first season as a racially integrated unit.
+
+Actors: Denzel Washington, Will Patton, Wood Harris, Ryan Hurst
+---------------------------

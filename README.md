@@ -47,3 +47,8 @@ Begin each query with ```node liri.js``` followed by one of the available subcom
 
 ```do-what-it-says``` executes commands found in random.txt file
 
+
+
+<p align="center">
+    <img src="images/liri.jpg" width="600">
+</p>
